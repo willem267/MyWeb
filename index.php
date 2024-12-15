@@ -1,19 +1,6 @@
 <?php 
-include './Mysql/db_config.php';
-$keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+include './Mysql/xuly.php';
 
-// Câu truy vấn SQL để tìm kiếm sản phẩm theo tên
-if ($keyword) {
-    $query = "SELECT tensp, hinh, dongia FROM sanpham WHERE tensp LIKE :keyword";
-    $stmt = $conn->prepare($query);
-    $stmt->bindValue(':keyword', '%' . $keyword . '%', PDO::PARAM_STR);
-} else {
-    $query = "SELECT tensp, hinh, dongia FROM sanpham";
-    $stmt = $conn->prepare($query);
-}
-
-$stmt->execute();
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +48,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="register" href="#">Đăng ký</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="a" href="/Login/login_user.php">Đăng ký</a>
                             </li>
                         </ul>
                         <form method="GET" action="" class="d-flex" role="search">
@@ -116,8 +106,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="collapse" id="sidebar-content">
                     <ul id="sidebar-nav">
-                        <li class="sidebar-item"><a href="">Bài lẻ Yu-Gi-Oh</a></li>
-                        <li class="sidebar-item"><a href="">Bài lẻ Pokemon TCG</a></li>
+                        <li class="sidebar-item"><a href="index.php?category=l1">Bài lẻ Yu-Gi-Oh</a></li>
+                        <li class="sidebar-item"><a href="index.php?category=PK">Bài lẻ Pokemon TCG</a></li>
                         <li class="sidebar-item"><a href="">Bài lẻ Vanguard</a></li>
                         <li class="sidebar-item"><a href="">Yu-Gi-Oh Structure Deck</a></li>
                     </ul>
@@ -155,7 +145,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Footer -->
         <div class="container">
             <footer>
-                <p>Copyright@Bùi Anh Trưởng-DH52111985-D21_TH11</p>
+                <p>Shop uy tín #trustmebro</p>
             </footer>
         </div>
     </div>
