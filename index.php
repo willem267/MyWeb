@@ -120,7 +120,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="col-xl-3 col-md-6 col-sm-12">
                             <div class="product">
                                 <div class="product-img">
-                                    <img src="<?php echo htmlspecialchars($product['hinh']); ?>" alt="Product Image" class="product-img-responsive">
+                                    <img src="<?php echo "./images/".htmlspecialchars($product['hinh']); ?>" alt="Product Image" class="product-img-responsive">
                                 </div>
                                 <div class="product-name">
                                     <a href="thongtinsp.html"><?php echo htmlspecialchars($product['tensp']); ?></a>
