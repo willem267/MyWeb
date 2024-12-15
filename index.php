@@ -1,7 +1,18 @@
-<?php include './Mysql/db_config.php';
-$query = "SELECT tensp, hinh, dongia FROM sanpham";
-$stmt = $conn->prepare($query);
-$stmt->execute(); 
+<?php 
+include './Mysql/db_config.php';
+$keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+
+// Câu truy vấn SQL để tìm kiếm sản phẩm theo tên
+if ($keyword) {
+    $query = "SELECT tensp, hinh, dongia FROM sanpham WHERE tensp LIKE :keyword";
+    $stmt = $conn->prepare($query);
+    $stmt->bindValue(':keyword', '%' . $keyword . '%', PDO::PARAM_STR);
+} else {
+    $query = "SELECT tensp, hinh, dongia FROM sanpham";
+    $stmt = $conn->prepare($query);
+}
+
+$stmt->execute();
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -52,7 +63,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <a class="nav-link" id="register" href="#">Đăng ký</a>
                             </li>
                         </ul>
-                        <form class="d-flex" role="search">
+                        <form method="GET" action="" class="d-flex" role="search">
                             <input class="form-control me-2 n-searchbox" type="search" name="keyword" placeholder="Nhập sản phẩm cần tìm" aria-label="Search">
                             <button class="btn btn-outline-success btn-search" type="submit">
                                 <i class="bi bi-search"></i>
