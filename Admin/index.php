@@ -40,7 +40,7 @@
                             <tr>
                                 <td><?php echo htmlentities($result->masp); ?></td>
                                 <td><?php echo htmlentities($result->tensp); ?></td>
-                                <td><img src="/images/<?php echo htmlentities($result->hinh); ?>" alt="Hình sản phẩm" width="100" height="100px"; object-fit="cover" ;></td>
+                                <td><img src="/images/<?php echo htmlentities($result->hinh); ?>" alt="Hình sản phẩm" width="100" height="100px"; ></td>
                                 <td><?php echo htmlentities($result->soluong); ?></td>
                                 <td><?php echo htmlentities($result->dongia); ?></td>
                                 <td><?php echo htmlentities($result->mota); ?></td>
