@@ -1,19 +1,6 @@
 <?php 
-include './Mysql/db_config.php';
-$keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
-
-// Câu truy vấn SQL để tìm kiếm sản phẩm theo tên
-if ($keyword) {
-    $query = "SELECT tensp, hinh, dongia FROM sanpham WHERE tensp LIKE :keyword";
-    $stmt = $conn->prepare($query);
-    $stmt->bindValue(':keyword', '%' . $keyword . '%', PDO::PARAM_STR);
-} else {
-    $query = "SELECT tensp, hinh, dongia FROM sanpham";
-    $stmt = $conn->prepare($query);
-}
-
-$stmt->execute();
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+include './Mysql/xuly.php';
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +16,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -59,20 +47,48 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <li class="nav-item">
                                 <a class="nav-link" id="contact-link" href="#">Liên hệ</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="login" href="login.php">Đăng nhập</a>
-                            </li>
                         </ul>
-                        <form method="GET" action="" class="d-flex" role="search">
-                            <input class="form-control me-2 n-searchbox" type="search" name="keyword" placeholder="Nhập sản phẩm cần tìm" aria-label="Search">
-                            <button class="btn btn-outline-success btn-search" type="submit">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </form>
+                        <!-- Chỉnh lại d-flex để nút Đăng nhập nằm bên trái của thanh tìm kiếm -->
+                        <div class="d-flex align-items-center">
+                            <!-- Nút đăng nhập nằm ở bên trái -->
+                            <ul class="navbar-nav me-3"> <!-- Dùng me-3 để tạo khoảng cách giữa Đăng nhập và tìm kiếm -->
+                                <?php if (isset($_SESSION['username'])): ?>
+                                    <!-- Hiển thị tên người dùng và icon nếu đã đăng nhập -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">
+                                            <i class="fas fa-user user-icon" style="font-size: 20px; margin-right: 8px;"></i> 
+                                            <?php echo $_SESSION['username']; ?>
+                                        </a>
+                                    </li>
+                                    <!-- Nút đăng xuất -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="Account/logout.php">
+                                            <i class="fas fa-sign-out-alt" style="font-size: 20px; margin-right: 8px;"></i>
+                                            Đăng xuất
+                                        </a>
+                                    </li>
+                                <?php else: ?>
+                                    <!-- Nếu chưa đăng nhập, hiển thị nút Đăng nhập -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="Account/login.php">Đăng nhập</a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+
+                            <!-- Thanh tìm kiếm sẽ nằm bên phải -->
+                            <form method="GET" action="" class="d-flex" role="search">
+                                <input class="form-control me-2 n-searchbox" type="search" name="keyword" placeholder="Nhập sản phẩm cần tìm" aria-label="Search">
+                                <button class="btn btn-outline-success btn-search" type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </nav>
         </div>
+
+
 
         <!-- Banner -->
         <div class="banner">
@@ -116,8 +132,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="collapse" id="sidebar-content">
                     <ul id="sidebar-nav">
-                        <li class="sidebar-item"><a href="">Bài lẻ Yu-Gi-Oh</a></li>
-                        <li class="sidebar-item"><a href="">Bài lẻ Pokemon TCG</a></li>
+                        <li class="sidebar-item"><a href="index.php?category=l1">Bài lẻ Yu-Gi-Oh</a></li>
+                        <li class="sidebar-item"><a href="index.php?category=PK">Bài lẻ Pokemon TCG</a></li>
                         <li class="sidebar-item"><a href="">Bài lẻ Vanguard</a></li>
                         <li class="sidebar-item"><a href="">Yu-Gi-Oh Structure Deck</a></li>
                     </ul>
@@ -155,7 +171,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Footer -->
         <div class="container">
             <footer>
-                <p>Copyright@Bùi Anh Trưởng-DH52111985-D21_TH11</p>
+                <p>Shop uy tín #trustmebro</p>
             </footer>
         </div>
     </div>
