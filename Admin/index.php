@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Xem sản phẩm</title>
 </head>
+
 <body>
 
     <div class="container">
@@ -39,23 +40,23 @@
                             <tr>
                                 <td><?php echo htmlentities($result->masp); ?></td>
                                 <td><?php echo htmlentities($result->tensp); ?></td>
-                                <td><img src="/images/<?php echo htmlentities($result->hinh); ?>" alt="Hình sản phẩm" width="100"></td>
+                                <td><img src="/images/<?php echo htmlentities($result->hinh); ?>" alt="Hình sản phẩm" width="100" height="100px"; ></td>
                                 <td><?php echo htmlentities($result->soluong); ?></td>
                                 <td><?php echo htmlentities($result->dongia); ?></td>
                                 <td><?php echo htmlentities($result->mota); ?></td>
                                 <td><?php echo htmlentities($result->maloai); ?></td>
+                                <td><a href="xoa.php?masp=<?php echo htmlentities($result->masp); ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">Xóa</a></td>
                             </tr>
                             <?php
                             
                         }
                     }
-?>
+                ?>
 
                 </tr>
-
-
             </table>
         </div>
     </div>
 </body>
+
 </html>
