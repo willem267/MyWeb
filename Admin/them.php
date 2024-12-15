@@ -8,17 +8,16 @@ $message = "";
 // Khởi tạo các biến để giữ lại giá trị nhập
 $masp = "";
 $tensp = "";
-$hinh = "";
 $soluong = "";
 $dongia = "";
 $mota = "";
 $maloai = "";
 
 // Lấy danh sách mã loại sản phẩm từ cơ sở dữ liệu
-$sql_loai = "SELECT * FROM loaisp"; // Thay 'loai_san_pham' bằng tên bảng chứa loại sản phẩm
+$sql_loai = "SELECT * FROM loaisp"; 
 $query_loai = $conn->prepare($sql_loai);
 $query_loai->execute();
-$loai_san_pham = $query_loai->fetchAll();
+$loai_san_pham = $query_loai->fetchAll(PDO::FETCH_ASSOC);
 
 // Xử lý form khi người dùng submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -41,39 +40,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $queryCheckTensp->bindParam(':tensp', $tensp);
     $queryCheckTensp->execute();
 
-    // Nếu mã sản phẩm hoặc tên sản phẩm đã tồn tại, không cho phép thêm
-    if ($queryCheckMasp->rowCount() > 0) {
+    // Nếu mã sản phẩm hoặc tên sản phẩm đã tồn tại
+    if ($queryCheckMasp->rowCount() > 0 && $queryCheckTensp->rowCount() > 0) {
+        $message = "Mã sản phẩm và tên sản phẩm đều đã tồn tại!";
+    } elseif ($queryCheckMasp->rowCount() > 0) {
         $message = "Mã sản phẩm đã tồn tại!";
     } elseif ($queryCheckTensp->rowCount() > 0) {
         $message = "Tên sản phẩm đã tồn tại!";
     } else {
-        // Upload hình ảnh nếu có
+        // Xử lý file hình ảnh
         if ($_FILES['hinh']['name']) {
-            $hinh = $_FILES['hinh']['name'];
-            $target_dir = "../images/";
-            $target_file = $target_dir . basename($_FILES["hinh"]["name"]);
-            move_uploaded_file($_FILES["hinh"]["tmp_name"], $target_file);
-        }
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $fileExtension = strtolower(pathinfo($_FILES['hinh']['name'], PATHINFO_EXTENSION));
 
-        // Thêm dữ liệu vào database
-        $sql = "INSERT INTO sanpham (masp, tensp, hinh, soluong, dongia, mota, maloai) 
-                VALUES (:masp, :tensp, :hinh, :soluong, :dongia, :mota, :maloai)";
-        $query = $conn->prepare($sql);
+            // Kiểm tra định dạng file
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                $message = "Chỉ được phép tải lên các file hình ảnh có đuôi .jpg, .jpeg, .png, .gif!";
+            } else {
+                $hinh = $_FILES['hinh']['name'];
+                $target_dir = "../images/";
+                $target_file = $target_dir . basename($_FILES["hinh"]["name"]);
 
-        $query->bindParam(':masp', $masp);
-        $query->bindParam(':tensp', $tensp);
-        $query->bindParam(':hinh', $hinh);
-        $query->bindParam(':soluong', $soluong);
-        $query->bindParam(':dongia', $dongia);
-        $query->bindParam(':mota', $mota);
-        $query->bindParam(':maloai', $maloai);
+                // Di chuyển file vào thư mục đích
+                move_uploaded_file($_FILES["hinh"]["tmp_name"], $target_file);
 
-        if ($query->execute()) {
-            $message = "Thêm sản phẩm thành công!";
-            header("Location: index.php"); // Chuyển hướng về trang index
-            exit; // Dừng thực thi mã tiếp theo
-        } else {
-            $message = "Có lỗi xảy ra khi thêm sản phẩm!";
+                // Thêm dữ liệu vào database
+                $sql = "INSERT INTO sanpham (masp, tensp, hinh, soluong, dongia, mota, maloai) 
+                        VALUES (:masp, :tensp, :hinh, :soluong, :dongia, :mota, :maloai)";
+                $query = $conn->prepare($sql);
+
+                $query->bindParam(':masp', $masp);
+                $query->bindParam(':tensp', $tensp);
+                $query->bindParam(':hinh', $hinh);
+                $query->bindParam(':soluong', $soluong);
+                $query->bindParam(':dongia', $dongia);
+                $query->bindParam(':mota', $mota);
+                $query->bindParam(':maloai', $maloai);
+
+                if ($query->execute()) {
+                    // Chuyển hướng về trang index sau khi thêm thành công
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    $message = "Có lỗi xảy ra khi thêm sản phẩm!";
+                }
+            }
         }
     }
 }
@@ -108,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="mb-3">
             <label for="hinh" class="form-label">Hình ảnh</label>
-            <input type="file" class="form-control" id="hinh" name="hinh" required>
+            <input type="file" class="form-control" id="hinh" name="hinh" accept="image/*" required>
         </div>
         <div class="mb-3">
             <label for="soluong" class="form-label">Số lượng</label>
