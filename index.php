@@ -39,7 +39,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="menu">
             <nav class="navbar navbar-expand-lg bg-custom">
                 <div class="container-fluid">
-                    <a class="navbar-brand" id="home-link" href="index.html">Trang chủ</a>
+                    <a class="navbar-brand" id="home-link" href="index.php">Trang chủ</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -53,7 +53,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </li>
                         </ul>
                         <form class="d-flex" role="search">
-                            <input class="form-control me-2 n-searchbox" type="search" placeholder="Nhập sản phẩm cần tìm" aria-label="Search">
+                            <input class="form-control me-2 n-searchbox" type="search" name="keyword" placeholder="Nhập sản phẩm cần tìm" aria-label="Search">
                             <button class="btn btn-outline-success btn-search" type="submit">
                                 <i class="bi bi-search"></i>
                             </button>
@@ -96,7 +96,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Main Content -->
         <div class="maincontent" id="maincontent">
             <!-- Sidebar -->
-            <div class="sidebar">
+            <div class="sidebar col-xl-3 col-md-6 col-sm-12">
                 <div class="d-flex" id="sidebar-first-line">
                     <button id="sidebar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-content" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="lni lni-grid-alt"></i>
@@ -112,12 +112,15 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </ul>
                 </div>
             </div>
+            <div id="space">
+
+            </div>
 
             <!-- Product Content -->
-            <div class="container content">
+            <div class="content">
                 <div class="row">
                     <?php foreach ($products as $product): ?>
-                        <div class="col-xl-3 col-md-6 col-sm-12">
+                        <div class="col-xl-4 col-md-6 col-sm-12">
                             <div class="product">
                                 <div class="product-img">
                                     <img src="<?php echo "./images/".htmlspecialchars($product['hinh']); ?>" alt="Product Image" class="product-img-responsive">
@@ -127,6 +130,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="valueable">
                                     <?php echo number_format(htmlspecialchars($product['dongia']), 0, ',', '.'); ?>đ
+                                </div>
+                                <div class="product-action">
+                                        <button class="btn btn-primary btn-buy">Mua hàng</button>
                                 </div>
                             </div>
                         </div>
