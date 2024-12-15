@@ -108,7 +108,7 @@ include './Mysql/xuly.php';
                     <ul id="sidebar-nav">
                         <li class="sidebar-item"><a href="index.php?category=l1">Bài lẻ Yu-Gi-Oh</a></li>
                         <li class="sidebar-item"><a href="index.php?category=PK">Bài lẻ Pokemon TCG</a></li>
-                        <li class="sidebar-item"><a href="">Bài lẻ Vanguard</a></li>
+                        <li class="sidebar-item"><a href="index.php?category=VG">Bài lẻ Vanguard</a></li>
                         <li class="sidebar-item"><a href="">Yu-Gi-Oh Structure Deck</a></li>
                     </ul>
                 </div>
