@@ -261,7 +261,9 @@
 }
 /* content */
 
-
+#space {
+    width: 5%;
+}
 .content {
     width: 70%;
 }
@@ -284,11 +286,13 @@
 .product-img {
     background-color: white;
     width: 100%;
+    height: 60%;
     text-align: center;
     align-content: center;
     justify-content: center;
     overflow: hidden;
-    height: 60%;
+    position: relative;
+    
     border-bottom: 1px solid #ddd;
     
 }
@@ -297,6 +301,11 @@
     max-height: 90%;
     width: 130px;
     height: 190px;
+}
+.product-img img {
+    max-width: 100%; /* Đảm bảo hình không vượt chiều rộng div */
+    max-height: 100%; /* Đảm bảo hình không vượt chiều cao div */
+    object-fit: contain; /* Hình sẽ giữ nguyên tỉ lệ và hiển thị vừa khung */
 }
 .product-name {
     text-align: center;
