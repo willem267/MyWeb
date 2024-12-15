@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Button</title>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    
+
+    <style>
+        /* content liên hệ */
+        .lienhe {
+            text-align: center;
+        }
+        .lienhe-tile {
+            background-color: #EDEDED;
+            color: rgb(85, 85, 85);
+        }
+        .lienhe-mota p {
+            font-size: 1.2rem;
+            color: rgb(85, 85, 85);
+        }
+        /* các nút liên kết */
+        /* tổng thể */
+        .link-btn {
+            position: fixed;
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            text-decoration: none;
+        }
+        .link-btn .link-text {
+            display: none;
+            white-space: nowrap;
+            margin-right: 10px;
+            transition: display 0.3s ease;
+        }
+        .link-btn:hover {
+            padding-left: 20px;
+        }
+        .link-btn:hover .link-text {
+            display: inline;
+            opacity: 1;
+        }
+        .link-btn .link-text {
+            font-size: 20px;
+        }
+
+        /* nút facebook */
+        .link-btn.facebook {
+            background-color: #39AFFC;
+            color: white;
+            right: 20px;
+            bottom: 20px;
+        }
+        .bi.bi-facebook {
+            font-size: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        /* nút messenger */
+        .link-btn.messenger {
+            background-color: #39AFFC;
+            color: white;
+            right: 20px;
+            bottom: 80px;
+        }
+        .bi.bi-messenger {
+            font-size: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        /* nút email */
+        .link-btn.Email {
+            background-color: #E84033;
+            color: #E4E4E4;
+            right: 20px;
+            bottom: 140px;
+        }
+        .bi.bi-envelope-at-fill {
+            font-size: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        /* nút zalo */
+        .link-btn.zalo {
+            background-color: #39AFFC;
+            color: white;
+            right: 20px;
+            bottom: 200px;
+          
+        }
+        .bi.bi-chat {
+            font-size: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        /* nút gg map */
+        .link-btn.ggmap {
+            background-color: #E74C3C;
+            color: white;
+            right: 20px;
+            bottom: 260px;
+        }
+        .bi.bi-compass {
+            font-size: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        /* nút điện thọi */
+        .link-btn.phone {
+            background-color: #1CCA8F;
+            color: white;
+            right: 20px;
+            bottom: 320px;
+        }
+        .bi.bi-telephone-fill{
+            font-size: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+
+
+    </style>
+    
+</head>
+<body>
+
+    <div class="container">
+        <div class="lienhe">
+            <div class="lienhe-tile">
+                <h1>Giới thiệu</h1>
+                
+            </div>
+            <div class="lienhe-mota">
+                <p>MyTCG là shop tcg uy tín nhất hệ mặt trời, nếu bạn cần liên hệ với chúng tôi, hãy nhấn vào các icon phía bên màn hình <br></p>
+                <p>Địa chỉ: 180 Cao Lỗ, p4, q8, TP.HCM <br></p>
+                <p>Số điện thoại: 0816305080</p>
+                <p>Email: dh52111985@student.stu.edu.vn</p>
+            </div>
+            <div class="lienhe-anh">
+            <img src="images/Thanks-img.jpg" alt="Thanh you" width="100%" height="auto">
+            </div>
+        </div>
+    </div>
+    <!-- Nút -->
+    <a href="https://www.facebook.com" class="link-btn facebook" target="_blank">
+        <span class="link-text">Fanpage</span>
+        <i class="bi bi-facebook"></i>
+    </a>
+    <a href="https://www.messenger.com" class="link-btn messenger" target="_blank">
+        <span class="link-text">Messenger</span>
+        <i class="bi bi-messenger"></i>
+    </a>
+    <a href="https://www.gmail.com" class="link-btn Email" target="_blank">
+        <span class="link-text">Email</span>
+        <i class="bi bi-envelope-at-fill"></i>
+    </a>
+    <a href="https://www.zalo.me" class="link-btn zalo" target="_blank">
+        <span class="link-text">Zalo</span>
+        <i class="bi bi-chat"></i>
+    </a>
+    <a href="https://www.maps.google.com" class="link-btn ggmap" target="_blank">
+        <span class="link-text">Google map</span>
+        <i class="bi bi-compass"></i>
+    </a>
+    <a href="#" class="link-btn phone">
+        <span class="link-text">0123456789</span>
+        <i class="bi bi-telephone-fill"></i>
+    </a>
+
+<script src="scripts/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+
+    <style>
+        .p-image{
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            height: 100%; 
+        }
+        #p-image-detail {
+            max-width: 80%; 
+            max-height: 80%;
+            width: auto; 
+            height: auto;
+        }
+        .p-name {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #38444D;
+            opacity: 0.8;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            overflow-wrap: break-word;
+        }
+        .p-price {
+            color: red;
+            font-size: 2rem;
+            text-align: center;
+            
+        }
+       
+        .buy {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .buy input {
+            font-size: 1.5rem;
+            border-radius: 10px;
+            background-color: #38444D;
+            color: white;
+        }
+        .buy input:hover{
+            opacity: 0.95;
+            font-style: italic;
+            font-weight: bolder;
+        }
+        .p-price, .buy {
+            position: relative; 
+            bottom: 0; 
+            left: 0;
+            width: 100%; 
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-sm-12">
+                <div class="p-image">
+                    <img id="p-image-detail" src="" alt="Product Image" name="image" >
+                </div>
+                
+            </div>
+            <div class="col-xl-6 col-sm-12">
+                <div class="p-name" id="p-name">
+                   
+                </div>
+                <div class="space">
+
+                </div>
+                <div class="p-price" id="p-price">
+                      
+                </div>
+
+                <div class="buy">
+                    <input type="button" value="Mua hàng">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="scripts/main.js"></script>
+    <script>
+          $(document).ready(function(){
+                var productname= localStorage.getItem('productname');
+                var productimage=localStorage.getItem('productimage');
+                var productprice=localStorage.getItem('productprice');
+
+                $('#p-name').text(productname);
+                $('#p-image-detail').attr('src', productimage);
+                $('#p-price').text(productprice);
+
+0
+                localStorage.removeItem('productname');
+                localStorage.removeItem('productimage');
+                localStorage.removeItem('productprice');
+          });
+
+    </script>
+</body>
+</html>

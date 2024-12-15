@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+
+
+
+    <style>
+        span {
+            width: 165px;
+        }
+        .btn-DK{
+            width: 80px;
+            height: 35px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 400;
+            background-color: #38444D;
+            border-radius: 10px;
+            justify-self: center;
+            align-self: center;
+        
+        }
+        .btn-DK:hover {
+            opacity: 0.95;
+            font-weight: bolder;
+        }
+        .btn {
+            justify-content: center;
+            text-align: center;
+            align-content: center;
+        }
+        .regis-btn {
+          text-align: center;
+          justify-content: center;
+          align-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <form id="dangky-form">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Userame: </span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" id="username" name="username">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Password: </span>
+            <input type="password" class="form-control" placeholder="Password" aria-label="Password" id="password" name="password">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Email: </span>
+            <input type="email" class="form-control" placeholder="Nhập email của bạn" aria-label="Email" id="email" name="email">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Số điện thoại: </span>
+            <input type="text" class="form-control" placeholder="Nhập số điện thoại của bạn" aria-label="Số điện thoại" id="phone" name="phone">
+          </div>
+          <div class="input-group mb-3 regis-btn">
+            <input type="submit" class="btn-DK" value="Đăng ký">
+          </div>
+        </form>
+    </div>
+
+
+    <script src="scripts/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+
+            $("#dangky-form").submit(function(event) {
+                event.preventDefault();
+                
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var email = $("#email").val();
+                var phone = $("#phone").val();
+
+                if (username === "" || password === "" || email === "" || phone === "") {
+                    alert("Vui lòng nhập đầy đủ thông tin.");
+                    return;
+                }
+                
+                
+
+                if (password.length < 8 || password.length > 16 || !isValidPassword(password)) {
+                    alert("Mật khẩu phải có từ 8 đến 16 ký tự bao gồm số, ít nhất một chữ hoa và thường.");
+                    return;
+                }
+                if (!isValidEmail(email)) {
+                    alert("Vui lòng nhập đúng định dạng email.");
+                    return;
+                }
+                if (!isValidPhone(phone)){
+                  alert("Vui lòng nhập đúng định dạng số điện thoại (10 số bắt đầu bằng số 0)")
+                  return;
+                }
+                window.location.href = "index.html";
+                alert("Đăng ký thành công");
+                return true;
+               
+            });
+        });
+
+        function isValidPhone(phone) {
+                var phonePattern = /^0\d{9}$/;
+                return phonePattern.test(phone);
+        } 
+
+        function isValidEmail(email){
+              var emailPattern = /\S+@\S+\.\S+/;
+              return emailPattern.test(email);
+        }
+        function isValidPassword(password) {
+            var passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]+$/;
+            return passwordPattern.test(password);
+        }
+      
+    </script>
+</body>
+</html>
+
