@@ -370,3 +370,10 @@
     font-weight: 600;
     color: white;
   }
+
+
+.user-icon {
+    font-size: 20px;
+    margin-right: 8px;
+    color: #007bff;
+}
