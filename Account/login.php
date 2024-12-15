@@ -20,12 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Kiểm tra nếu có người dùng và quyền là 'user'
     if ($user) {
-        if ($user['quyen'] == 'admin') {
+        if ($user['quyen'] == 'user') {
             // Lưu thông tin người dùng vào session
             $_SESSION['username'] = $username;
             $_SESSION['quyen'] = $user['quyen'];
             // Chuyển hướng đến trang index sau khi đăng nhập thành công
-            header("Location: index1.php");
+            header("Location: ../index.php");
             exit();
         } else {
             $error_message = "Bạn không có quyền truy cập!";
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="login-container">
     <h3>Đăng nhập</h3>
-    <form method="POST" action="index.php">
+    <form method="POST" action="login.php">
         <div class="mb-3">
             <label for="username" class="form-label">Tên đăng nhập</label>
             <input type="text" class="form-control" id="username" name="username" required placeholder="Nhập tên đăng nhập">
@@ -94,7 +94,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
         <button type="submit" class="btn btn-primary">Đăng nhập</button>
     </form>
-   
+
+    <div class="mt-3 text-center">
+        <a href="register.php" class="text-muted">Chưa có tài khoản? Đăng ký ngay!</a>
+    </div>
+    
+    <!-- Nút quay lại trang index -->
+    <div class="mt-3">
+        <a href="../index.php" class="btn btn-secondary">Quay lại trang chủ</a>
+    </div>
 </div>
 
 </body>
