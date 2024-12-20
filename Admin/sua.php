@@ -81,6 +81,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = "Có lỗi xảy ra khi cập nhật sản phẩm.";
     }
 }
+//lấy danh sách các loại sản phẩm
+$sql_maloai = "SELECT maloai, tenloai FROM loaisp"; // Bảng `loaisanpham` chứa thông tin loại sản phẩm
+$query_maloai = $conn->prepare($sql_maloai);
+$query_maloai->execute();
+$loaiSanPhamList = $query_maloai->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="container mt-5">
     <h3>Sửa sản phẩm</h3>
-    <a href="index.php" class="btn btn-secondary mb-3">Quay lại</a>
+    <a href="index1.php" class="btn btn-secondary mb-3">Quay lại</a>
 
     <?php if ($message): ?>
         <div class="alert alert-info"><?php echo $message; ?></div>
@@ -129,8 +135,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <textarea class="form-control" id="mota" name="mota" rows="3"><?php echo htmlentities($mota); ?></textarea>
         </div>
         <div class="mb-3">
-            <label for="maloai" class="form-label">Mã loại sản phẩm</label>
-            <input type="text" class="form-control" id="maloai" name="maloai" value="<?php echo htmlentities($maloai); ?>" required>
+        <label for="maloai" class="form-label">Mã loại sản phẩm</label>
+            <select class="form-select" id="maloai" name="maloai" required>
+                <option value="">-- Chọn loại sản phẩm --</option>
+                <?php foreach ($loaiSanPhamList as $loai): ?>
+                    <option value="<?php echo htmlentities($loai['maloai']); ?>" 
+                        <?php echo ($maloai == $loai['maloai']) ? 'selected' : ''; ?>>
+                        <?php echo htmlentities($loai['tenloai']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <button type="submit" class="btn btn-success">Cập nhật sản phẩm</button>
     </form>

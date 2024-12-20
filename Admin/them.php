@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="container mt-5">
     <h3>Thêm sản phẩm mới</h3>
-    <a href="index.php" class="btn btn-secondary mb-3">Quay lại</a>
+    <a href="index1.php" class="btn btn-secondary mb-3">Quay lại</a>
 
     <?php if ($message): ?>
         <div class="alert alert-info"><?php echo $message; ?></div>
