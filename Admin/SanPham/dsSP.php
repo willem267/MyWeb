@@ -30,7 +30,7 @@
     <div class="container">
         <div class="col-md-4">
             <h3>Danh sách sản phẩm</h3>
-            <a href="them.php" class="btn btn-primary">Thêm</a>
+            <a href="index.php?page=them&area=SanPham" class="btn btn-primary">Thêm</a>
         </div>
         <div class="table-responsive">
             <table class="table table-bordered table-stripe">
@@ -45,7 +45,7 @@
                 </tr> 
                 <tr>
                 <?php
-                include '../Mysql/db_config.php';
+                include '../../Mysql/db_config.php';
                     $sql = "SELECT * FROM sanpham"; 
                     $query = $conn->prepare($sql);
                     $query->execute();
@@ -66,8 +66,8 @@
                                 <td><?php echo htmlentities($result->dongia); ?></td>
                                 <td><?php echo htmlentities($result->mota); ?></td>
                                 <td><?php echo htmlentities($result->maloai); ?></td>
-                                <td><a href="sua.php?id=<?php echo $result->masp; ?>" class="btn btn-warning">Sửa</a></td>
-                                <td><a href="xoa.php?masp=<?php echo htmlentities($result->masp); ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">Xóa</a></td>
+                                <td><a href="index.php?page=sua&area=SanPham&id=<?php echo $result->masp; ?>" class="btn btn-warning">Sửa</a></td>
+                                <td><a href="index.php?page=xoa&area=SanPham&masp=<?php echo htmlentities($result->masp); ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">Xóa</a></td>
                             </tr>
                             <?php
                         }

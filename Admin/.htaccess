@@ -1,0 +1,15 @@
+# Kích hoạt mod_rewrite
+RewriteEngine On
+
+# Loại trừ các trang đăng nhập hoặc bất kỳ trang công khai nào
+RewriteCond %{REQUEST_URI} !^/login.php$ [NC]
+RewriteCond %{REQUEST_URI} !^/Admin/login.php$ [NC]
+
+# Loại trừ thư mục công khai khác
+RewriteCond %{REQUEST_URI} !^/public/.*$ [NC]
+
+# Kiểm tra nếu người dùng truy cập vào thư mục Admin mà không có quyền
+RewriteCond %{REQUEST_URI} ^/Admin/ [NC]
+
+# Chuyển hướng về trang login nếu người dùng không được phép truy cập
+RewriteRule ^(.*)$ /login.php [L,R=302]

@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if ($query->execute()) {
                     // Chuyển hướng về trang index sau khi thêm thành công
-                    header("Location: danhsachloai.php");
+                    header("Location: index.php?page=danhsachloai&area=LoaiSP");
                     exit();
                 } else {
                     $message = "Có lỗi xảy ra khi thêm sản phẩm!";
@@ -75,13 +75,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="container mt-5">
     <h3>Thêm sản phẩm mới</h3>
-    <a href="danhsachloai.php" class="btn btn-secondary mb-3">Quay lại</a>
+    <a href="index.php?page=danhsachloai&area=LoaiSP" class="btn btn-secondary mb-3">Quay lại</a>
 
     <?php if ($message): ?>
         <div class="alert alert-info"><?php echo $message; ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="them.php" enctype="multipart/form-data">
+    <form method="POST" action="index.php?page=them&area=LoaiSP" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="masp" class="form-label">Mã loại sản phẩm</label>
             <input type="text" class="form-control" id="masp" name="maloai" value="<?php echo htmlspecialchars($maloai); ?>" required>

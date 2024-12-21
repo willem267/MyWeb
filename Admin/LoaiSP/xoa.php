@@ -12,14 +12,14 @@ if (isset($_GET['maloai'])) {
     $deleteQuery->bindParam(':maloai', $maloai);
     if ($deleteQuery->execute()) {
         // Chuyển hướng về trang danh sách sản phẩm sau khi xóa thành công
-        header('Location: danhsachloai.php?message=Xóa sản phẩm thành công');
+        header('Location: index.php?page=danhsachloai&area=LoaiSP&message=Xóa loại sản phẩm thành công');
         exit();
     } else {
         echo "Có lỗi khi xóa sản phẩm.";
     }
 } else {
     // Nếu không có mã sản phẩm, chuyển hướng về trang danh sách sản phẩm
-    header('Location: danhsachloai.php');
+    header('Location: index.php?page=danhsachloai&area=LoaiSP');
     exit();
 }
 ?>

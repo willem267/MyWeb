@@ -11,43 +11,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $fullname = $_POST['fullname'];
 
-    // Kiểm tra xem tên đăng nhập đã tồn tại chưa
-    $sql_check_username = "SELECT * FROM user WHERE username = :username";
-    $query_check_username = $conn->prepare($sql_check_username);
-    $query_check_username->bindParam(':username', $username);
-    $query_check_username->execute();
-
-    // Kiểm tra xem email đã tồn tại chưa
-    $sql_check_email = "SELECT * FROM user WHERE email = :email";
-    $query_check_email = $conn->prepare($sql_check_email);
-    $query_check_email->bindParam(':email', $email);
-    $query_check_email->execute();
-
-    if ($query_check_username->rowCount() > 0) {
-        // Tên đăng nhập đã tồn tại, thông báo tên đã được sử dụng
-        $message = "Tên đăng nhập '$username' đã được sử dụng. Vui lòng chọn tên khác.";
-    } elseif ($query_check_email->rowCount() > 0) {
-        // Email đã tồn tại, thông báo email đã được sử dụng
-        $message = "Email '$email' đã được sử dụng. Vui lòng chọn email khác.";
+    // Kiểm tra tên đăng nhập tối đa 10 ký tự
+    if (strlen($username) > 10) {
+        $message = "Tên đăng nhập không được vượt quá 10 ký tự.";
     } else {
-        // Kiểm tra mật khẩu phải là số và có ít nhất 6 chữ số và tối đa 12 chữ số
-        if (!preg_match('/^\d{6,12}$/', $password)) {
-            $message = "Mật khẩu phải là số và có từ 6 đến 12 chữ số.";
+        // Kiểm tra xem tên đăng nhập đã tồn tại chưa
+        $sql_check_username = "SELECT * FROM user WHERE username = :username";
+        $query_check_username = $conn->prepare($sql_check_username);
+        $query_check_username->bindParam(':username', $username);
+        $query_check_username->execute();
+
+        // Kiểm tra xem email đã tồn tại chưa
+        $sql_check_email = "SELECT * FROM user WHERE email = :email";
+        $query_check_email = $conn->prepare($sql_check_email);
+        $query_check_email->bindParam(':email', $email);
+        $query_check_email->execute();
+
+        if ($query_check_username->rowCount() > 0) {
+            // Tên đăng nhập đã tồn tại, thông báo tên đã được sử dụng
+            $message = "Tên đăng nhập '$username' đã được sử dụng. Vui lòng chọn tên khác.";
+        } elseif ($query_check_email->rowCount() > 0) {
+            // Email đã tồn tại, thông báo email đã được sử dụng
+            $message = "Email '$email' đã được sử dụng. Vui lòng chọn email khác.";
         } else {
-            // Thêm người dùng mới vào cơ sở dữ liệu
-            $sql_insert = "INSERT INTO user (username, password, email, fullname, quyen) 
-                           VALUES (:username, :password, :email, :fullname, 'user')";
-            $query_insert = $conn->prepare($sql_insert);
-            $query_insert->bindParam(':username', $username);
-            $query_insert->bindParam(':password', $password);
-            $query_insert->bindParam(':email', $email);
-            $query_insert->bindParam(':fullname', $fullname);
-            
-            if ($query_insert->execute()) {
-                header("Location: login.php"); // Chuyển hướng về trang đăng nhập
-                exit();
+            // Kiểm tra mật khẩu phải là số và có ít nhất 6 chữ số và tối đa 12 chữ số
+            if (!preg_match('/^\d{6,12}$/', $password)) {
+                $message = "Mật khẩu phải là số và có từ 6 đến 12 chữ số.";
             } else {
-                $message = "Đã có lỗi xảy ra khi đăng ký. Vui lòng thử lại.";
+                // Thêm người dùng mới vào cơ sở dữ liệu
+                $sql_insert = "INSERT INTO user (username, password, email, fullname, quyen) 
+                               VALUES (:username, :password, :email, :fullname, 'user')";
+                $query_insert = $conn->prepare($sql_insert);
+                $query_insert->bindParam(':username', $username);
+                $query_insert->bindParam(':password', $password);
+                $query_insert->bindParam(':email', $email);
+                $query_insert->bindParam(':fullname', $fullname);
+
+                if ($query_insert->execute()) {
+                    header("Location: login.php"); // Chuyển hướng về trang đăng nhập
+                    exit();
+                } else {
+                    $message = "Đã có lỗi xảy ra khi đăng ký. Vui lòng thử lại.";
+                }
             }
         }
     }
@@ -99,15 +104,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="register-container">
         <h2>Đăng Ký</h2>
-        
+
         <?php if ($message): ?>
             <div class="alert alert-danger"><?php echo $message; ?></div>
         <?php endif; ?>
-        
+
         <form method="POST" action="register.php">
             <div class="mb-3">
                 <label for="username" class="form-label">Tên đăng nhập</label>
-                <input type="text" id="username" name="username" class="form-control" required value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>">
+                <input type="text" id="username" name="username" class="form-control" required maxlength="10" title="Tên đăng nhập tối đa 10 ký tự" value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>">
             </div>
 
             <div class="mb-3">

@@ -1,6 +1,6 @@
 <?php
 // Kết nối cơ sở dữ liệu
-include '../Mysql/db_config.php';
+include '../../Mysql/db_config.php';
 
 // Khởi tạo biến để lưu thông báo
 $message = "";
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $message = "Chỉ được phép tải lên các file hình ảnh có đuôi .jpg, .jpeg, .png, .gif!";
             } else {
                 $hinh = $_FILES['hinh']['name'];
-                $target_dir = "../images/";
+                $target_dir = "../../images/";
                 $target_file = $target_dir . basename($_FILES["hinh"]["name"]);
 
                 // Di chuyển file vào thư mục đích
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if ($query->execute()) {
                     // Chuyển hướng về trang index sau khi thêm thành công
-                    header("Location: index.php");
+                    header("Location: index.php?page=dsSP&area=SanPham");
                     exit();
                 } else {
                     $message = "Có lỗi xảy ra khi thêm sản phẩm!";
@@ -102,13 +102,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="container mt-5">
     <h3>Thêm sản phẩm mới</h3>
-    <a href="index.php" class="btn btn-secondary mb-3">Quay lại</a>
+    <a href="index.php?page=dsSP&area=SanPham" class="btn btn-secondary mb-3">Quay lại</a>
 
     <?php if ($message): ?>
         <div class="alert alert-info"><?php echo $message; ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="them.php" enctype="multipart/form-data">
+    <form method="POST" action="index.php?page=them&area=SanPham" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="masp" class="form-label">Mã sản phẩm</label>
             <input type="text" class="form-control" id="masp" name="masp" value="<?php echo htmlspecialchars($masp); ?>" required>

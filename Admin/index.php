@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $username;
             $_SESSION['quyen'] = $user['quyen'];
             // Chuyển hướng đến trang index sau khi đăng nhập thành công
-            header("Location: index1.php");
+            header("Location: Home/index.php");
             exit();
         } else {
             $error_message = "Bạn không có quyền truy cập!";

@@ -6,8 +6,8 @@ include '../Mysql/db_config.php';
 $error_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
     // Truy vấn để lấy thông tin người dùng từ cơ sở dữ liệu
     $sql = "SELECT * FROM user WHERE username = :username AND password = :password";

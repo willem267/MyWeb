@@ -1,6 +1,6 @@
 <?php
 // Kết nối cơ sở dữ liệu
-include '../Mysql/db_config.php';
+include '../../Mysql/db_config.php';
 
 // Kiểm tra nếu có mã sản phẩm được gửi qua URL
 if (isset($_GET['masp'])) {
@@ -15,7 +15,7 @@ if (isset($_GET['masp'])) {
 
     // Nếu không tìm thấy sản phẩm, chuyển hướng về trang danh sách
     if (!$product) {
-        header('Location: index.php');
+        header('Location: index.php?page=dsSP&area=SanPham');
         exit();
     }
 
@@ -25,20 +25,20 @@ if (isset($_GET['masp'])) {
     $deleteQuery->bindParam(':masp', $masp);
     if ($deleteQuery->execute()) {
         // Kiểm tra nếu file ảnh tồn tại và xóa nó
-        $imagePath = '../images/' . $product->hinh;
+        $imagePath = '../../images/' . $product->hinh;
         if (file_exists($imagePath)) {
             unlink($imagePath);  // Xóa file ảnh
         }
 
         // Chuyển hướng về trang danh sách sản phẩm sau khi xóa thành công
-        header('Location: index.php?message=Xóa sản phẩm thành công');
+        header('Location: index.php?page=dsSP&area=SanPham&message=Xóa sản phẩm thành công');
         exit();
     } else {
         echo "Có lỗi khi xóa sản phẩm.";
     }
 } else {
     // Nếu không có mã sản phẩm, chuyển hướng về trang danh sách sản phẩm
-    header('Location: index.php');
+    header('Location: index.php?page=dsSP&area=SanPham');
     exit();
 }
 ?>

@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
 
     // Cập nhật dữ liệu vào cơ sở dữ liệu
-    $sql_update = "UPDATE loai SET tenloai= :tenloai WHERE maloai = :maloai";
+    $sql_update = "UPDATE loaisp SET tenloai= :tenloai WHERE maloai = :maloai";
     $query_update = $conn->prepare($sql_update);
 
     $query_update->bindParam(':maloai', $maloai);
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($query_update->execute()) {
         $message = "Cập nhật sản phẩm thành công!";
-        header("Location: danhsachloai.php"); // Chuyển hướng về trang danh sách sản phẩm
+        header("Location: index.php?page=danhsachloai&area=LoaiSP"); // Chuyển hướng về trang danh sách sản phẩm
     } else {
         $message = "Có lỗi xảy ra khi cập nhật loại sản phẩm.";
     }
@@ -59,13 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="container mt-5">
     <h3>Sửa sản phẩm</h3>
-    <a href="danhsachloai.php" class="btn btn-secondary mb-3">Quay lại</a>
+    <a href="index.php?page=danhsachloai&area=LoaiSP" class="btn btn-secondary mb-3">Quay lại</a>
 
     <?php if ($message): ?>
         <div class="alert alert-info"><?php echo $message; ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="sua.php?id=<?php echo $maloai; ?>" enctype="multipart/form-data">
+    <form method="POST" action="index.php?page=sua&area=LoaiSP&id=<?php echo $maloai; ?>" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="masp" class="form-label">Mã sản phẩm</label>
             <input type="text" class="form-control" id="maloai" name="maloai" value="<?php echo htmlentities($maloai); ?>" readonly>
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" class="form-control" id="tenloai" name="tenloai" value="<?php echo htmlentities($tenloai); ?>" required>
         </div>
       
-        <button type="submit" class="btn btn-success">Cập nhật sản phẩm</button>
+        <button type="submit" class="btn btn-success">Cập nhật loại sản phẩm</button>
     </form>
 </div>
 </body>

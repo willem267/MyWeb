@@ -1,6 +1,6 @@
 <?php
 // Kết nối cơ sở dữ liệu
-include '../Mysql/db_config.php';
+include '../../Mysql/db_config.php';
 
 // Khởi tạo thông báo và biến chứa thông tin sản phẩm
 $message = "";
@@ -10,7 +10,13 @@ $hinh = "";
 $soluong = "";
 $dongia = "";
 $mota = "";
-$maloai = "";
+
+
+//lấy danh sách các loại sản phẩm
+$sql_maloai = "SELECT maloai, tenloai FROM loaisp"; // Bảng `loaisanpham` chứa thông tin loại sản phẩm
+$query_maloai = $conn->prepare($sql_maloai);
+$query_maloai->execute();
+$loaiSanPhamList = $query_maloai->fetchAll(PDO::FETCH_ASSOC);
 
 // Lấy thông tin sản phẩm từ URL
 if (isset($_GET['id'])) {
@@ -46,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Kiểm tra nếu có hình ảnh mới được tải lên
     if ($_FILES['hinh']['name']) {
-        $target_dir = "../images/";
+        $target_dir = "../../images/";
         $target_file = $target_dir . basename($_FILES["hinh"]["name"]);
 
         // Xóa hình ảnh cũ nếu tồn tại
@@ -76,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($query_update->execute()) {
         $message = "Cập nhật sản phẩm thành công!";
-        header("Location: index.php"); // Chuyển hướng về trang danh sách sản phẩm
+        header("Location: index.php?page=dsSP&area=SanPham"); // Chuyển hướng về trang danh sách sản phẩm
     } else {
         $message = "Có lỗi xảy ra khi cập nhật sản phẩm.";
     }
@@ -94,13 +100,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="container mt-5">
     <h3>Sửa sản phẩm</h3>
-    <a href="index.php" class="btn btn-secondary mb-3">Quay lại</a>
+    <a href="index.php?page=dsSP&area=SanPham" class="btn btn-secondary mb-3">Quay lại</a>
 
     <?php if ($message): ?>
         <div class="alert alert-info"><?php echo $message; ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="sua.php?id=<?php echo $masp; ?>" enctype="multipart/form-data">
+    <form method="POST" action="index.php?page=sua&area=SanPham&id=<?php echo $masp; ?>" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="masp" class="form-label">Mã sản phẩm</label>
             <input type="text" class="form-control" id="masp" name="masp" value="<?php echo htmlentities($masp); ?>" readonly>
@@ -113,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="hinh" class="form-label">Hình ảnh</label>
             <input type="file" class="form-control" id="hinh" name="hinh" accept="image/*">
             <?php if ($hinh): ?>
-                <img src="../images/<?php echo htmlentities($hinh); ?>" alt="Hình sản phẩm" width="100" height="100">
+                <img src="../../images/<?php echo htmlentities($hinh); ?>" alt="Hình sản phẩm" width="100" height="100">
             <?php endif; ?>
         </div>
         <div class="mb-3">
@@ -129,8 +135,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <textarea class="form-control" id="mota" name="mota" rows="3"><?php echo htmlentities($mota); ?></textarea>
         </div>
         <div class="mb-3">
-            <label for="maloai" class="form-label">Mã loại sản phẩm</label>
-            <input type="text" class="form-control" id="maloai" name="maloai" value="<?php echo htmlentities($maloai); ?>" required>
+        <label for="maloai" class="form-label">Mã loại sản phẩm</label>
+            <select class="form-select" id="maloai" name="maloai" required>
+                <option value="">-- Chọn loại sản phẩm --</option>
+                <?php foreach ($loaiSanPhamList as $loai): ?>
+                    <option value="<?php echo htmlentities($loai['maloai']); ?>" 
+                        <?php echo ($maloai == $loai['maloai']) ? 'selected' : ''; ?>>
+                        <?php echo htmlentities($loai['tenloai']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <button type="submit" class="btn btn-success">Cập nhật sản phẩm</button>
     </form>
